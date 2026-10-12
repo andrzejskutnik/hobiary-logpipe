@@ -1,0 +1,40 @@
+# Build artefakty .NET
+**/bin/
+**/obj/
+
+# NuGet
+*.nupkg
+*.snupkg
+
+# VS/Rider
+.vs/
+.idea/
+.vscode/
+*.user
+
+# Python
+.venv/
+**/__pycache__/
+*.pyc
+
+# MkDocs
+site/
+docs/_generated/
+artifacts/
+
+# Logi
+*.log
+src/HobiaryLogPipe.Adapter/logs-dev/
+
+# Wyniki testów
+**/TestResults/
+
+# HobiaryLogPipe sample output
+samples/HlogInspect/smoke-logs/
+samples/HlogInspect/filter-smoke-logs/
+samples/BrokerlessDemo/demo-logs/
+samples/BrokerlessWebDemo/**/demo-logs/
+*.env
+logs-direct/
+logs-direct-demo/
+.native/

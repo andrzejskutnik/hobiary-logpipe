@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\HobiaryLogPipe.InputPlugin\HobiaryLogPipe.InputPlugin.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+            <_Parameter1>HobiaryLogPipe.MicrosoftLogging.Tests</_Parameter1>
+        </AssemblyAttribute>
+    </ItemGroup>
+</Project>

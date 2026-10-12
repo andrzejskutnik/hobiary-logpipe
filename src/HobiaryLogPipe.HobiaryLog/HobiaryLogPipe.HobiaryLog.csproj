@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <HobiaryLogDbBuildDir Condition="'$(HobiaryLogDbBuildDir)' == ''">$(MSBuildThisFileDirectory)..\..\..\hobiary-logdb\build\</HobiaryLogDbBuildDir>
+    </PropertyGroup>
+    <ItemGroup Condition="Exists('$(HobiaryLogDbBuildDir)hobiarylogdb.dll')">
+        <Content Include="$(HobiaryLogDbBuildDir)hobiarylogdb.dll">
+            <Link>hobiarylogdb.dll</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+    </ItemGroup>
+    <ItemGroup Condition="Exists('$(HobiaryLogDbBuildDir)libhobiarylogdb.so')">
+        <Content Include="$(HobiaryLogDbBuildDir)libhobiarylogdb.so">
+            <Link>libhobiarylogdb.so</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+    </ItemGroup>
+</Project>

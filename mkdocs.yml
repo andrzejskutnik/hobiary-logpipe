@@ -1,0 +1,43 @@
+site_name: HobiaryLogPipe
+site_description: Dokumentacja projektu HobiaryLogPipe
+site_url: https://andrzejskutnik.github.io/hobiary-logpipe/
+repo_url: https://github.com/andrzejskutnik/hobiary-logpipe
+repo_name: hobiary-logpipe
+
+docs_dir: docs
+site_dir: site
+use_directory_urls: true
+
+theme:
+  name: mkdocs
+  language: pl
+
+extra_css:
+  - styles/brand.css
+
+nav:
+  - Start: index.md
+  - Overview: _generated/README.md
+  - REST API: api.md
+  - Dashboard i Operacje: operations.md
+  - Troubleshooting: troubleshooting.md
+  - Deployment Adaptera: deployment.md
+  - Integracja Pluginow: plugin-integration.md
+  - Cookbook: cookbook.md
+  - Przewodnik Uzytkownika: _generated/PrzewodnikUżytkownika.md
+  - Architektura: _generated/architektura.md
+  - Plan rozwoju: _generated/plan.md
+  - Publikacja dokumentacji: publishing.md
+  - Publikacja Self-Hosted: self-hosted-publishing.md
+  - Changelog: _generated/CHANGELOG.md
+  - Konfiguracja adaptera: _generated/config/appsettings.example.json
+  - Release readiness: release-readiness.md
+
+hooks:
+  - docs/hooks/sync_root_docs.py
+
+markdown_extensions:
+  - admonition
+  - tables
+  - toc:
+      permalink: true

@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <!-- DemoApp — nie jest częścią testów, nie wymaga TreatWarningsAsErrors -->
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.0" />
+        <PackageReference Include="Serilog.Extensions.Hosting" Version="10.0.0" />
+        <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.11.2" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\HobiaryLogPipe.Serilog\HobiaryLogPipe.Serilog.csproj" />
+        <ProjectReference Include="..\..\src\HobiaryLogPipe.MicrosoftLogging\HobiaryLogPipe.MicrosoftLogging.csproj" />
+        <ProjectReference Include="..\..\src\HobiaryLogPipe.OpenTelemetry\HobiaryLogPipe.OpenTelemetry.csproj" />
+    </ItemGroup>
+</Project>

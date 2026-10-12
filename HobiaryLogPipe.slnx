@@ -1,0 +1,26 @@
+<Solution>
+    <Project Path="src/HobiaryLogPipe.Contracts/HobiaryLogPipe.Contracts.csproj" />
+    <Project Path="src/HobiaryLogPipe.HobiaryLog/HobiaryLogPipe.HobiaryLog.csproj" />
+    <Project Path="src/HobiaryLogPipe.InputPlugin/HobiaryLogPipe.InputPlugin.csproj" />
+    <Project Path="src/HobiaryLogPipe.Serilog/HobiaryLogPipe.Serilog.csproj" />
+    <Project Path="src/HobiaryLogPipe.MicrosoftLogging/HobiaryLogPipe.MicrosoftLogging.csproj" />
+    <Project Path="src/HobiaryLogPipe.OpenTelemetry/HobiaryLogPipe.OpenTelemetry.csproj" />
+    <Project Path="src/HobiaryLogPipe.Adapter/HobiaryLogPipe.Adapter.csproj" />
+    <Folder Name="/samples/" />
+    <Folder Name="/src/">
+        <Project Path="src/HobiaryLogPipe.AspNetCore/HobiaryLogPipe.AspNetCore.csproj" />
+    </Folder>
+    <Folder Name="/tests/">
+        <Project Path="tests/HobiaryLogPipe.AspNetCore.Tests/HobiaryLogPipe.AspNetCore.Tests.csproj" />
+    </Folder>
+    <Project Path="samples/DemoApp/DemoApp.csproj" />
+    <Project Path="samples/BrokerlessDemo/BrokerlessDemo.csproj" />
+    <Project Path="samples/BrokerlessWebDemo/BrokerlessWebDemo.csproj" />
+    <Project Path="samples/HlogInspect/HlogInspect.csproj" />
+    <Project Path="samples/DirectPublisher/DirectPublisher.csproj" />
+    <Project Path="tests/HobiaryLogPipe.InputPlugin.Tests/HobiaryLogPipe.InputPlugin.Tests.csproj" />
+    <Project Path="tests/HobiaryLogPipe.Adapter.Tests/HobiaryLogPipe.Adapter.Tests.csproj" />
+    <Project Path="tests/HobiaryLogPipe.Serilog.Tests/HobiaryLogPipe.Serilog.Tests.csproj" />
+    <Project Path="tests/HobiaryLogPipe.MicrosoftLogging.Tests/HobiaryLogPipe.MicrosoftLogging.Tests.csproj" />
+    <Project Path="tests/HobiaryLogPipe.OpenTelemetry.Tests/HobiaryLogPipe.OpenTelemetry.Tests.csproj" />
+</Solution>

@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="OpenTelemetry" Version="1.15.3" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\HobiaryLogPipe.InputPlugin\HobiaryLogPipe.InputPlugin.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+            <_Parameter1>HobiaryLogPipe.OpenTelemetry.Tests</_Parameter1>
+        </AssemblyAttribute>
+    </ItemGroup>
+</Project>

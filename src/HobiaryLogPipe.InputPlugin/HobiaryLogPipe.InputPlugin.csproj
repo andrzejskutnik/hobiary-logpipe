@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <HobiaryLogDbBuildDir Condition="'$(HobiaryLogDbBuildDir)' == ''">$(MSBuildThisFileDirectory)..\..\..\hobiary-logdb\build\</HobiaryLogDbBuildDir>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="RabbitMQ.Client" Version="7.2.1" />
+        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\HobiaryLogPipe.Contracts\HobiaryLogPipe.Contracts.csproj" />
+        <ProjectReference Include="..\HobiaryLogPipe.HobiaryLog\HobiaryLogPipe.HobiaryLog.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <InternalsVisibleTo Include="HobiaryLogPipe.InputPlugin.Tests" />
+    </ItemGroup>
+    <ItemGroup Condition="Exists('$(HobiaryLogDbBuildDir)hobiarylogdb.dll')">
+        <Content Include="$(HobiaryLogDbBuildDir)hobiarylogdb.dll">
+            <Link>hobiarylogdb.dll</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+    </ItemGroup>
+    <ItemGroup Condition="Exists('$(HobiaryLogDbBuildDir)libhobiarylogdb.so')">
+        <Content Include="$(HobiaryLogDbBuildDir)libhobiarylogdb.so">
+            <Link>libhobiarylogdb.so</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+    </ItemGroup>
+</Project>

@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: andrzejskutnik/hobiary-logdb
+          ref: a5cc79e82f18e5b718c48e62b47f8962c529bdbe
+          path: .native/logdb
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - name: Build pinned native storage
+        run: |
+          cmake -S .native/logdb -B .native/logdb/build -G Ninja -DCMAKE_BUILD_TYPE=Release
+          cmake --build .native/logdb/build
+      - name: Build
+        run: dotnet build HobiaryLogPipe.slnx -c Release -p:HobiaryLogDbBuildDir=${{ github.workspace }}/.native/logdb/build/
+      - name: Tests including Direct and local HTTP integration
+        run: >
+          dotnet test HobiaryLogPipe.slnx --no-build -c Release
+          --filter "FullyQualifiedName!~HobiaryLogPipe.Adapter.Tests.Integration"
+      - name: Console and browser endpoint demo
+        shell: pwsh
+        run: ./tools/start-brokerless-demos.ps1 -StopWebOnExit -WarmupSeconds 20 -NativeBuildDirectory "${{ github.workspace }}/.native/logdb/build/"
+
+  rabbitmq-tests:
+    runs-on: ubuntu-latest
+    services:
+      rabbitmq:
+        image: rabbitmq:4
+        ports:
+          - 5672:5672
+        options: >-
+          --health-cmd "rabbitmq-diagnostics -q ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: andrzejskutnik/hobiary-logdb
+          ref: a5cc79e82f18e5b718c48e62b47f8962c529bdbe
+          path: .native/logdb
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - name: Build native storage
+        run: |
+          cmake -S .native/logdb -B .native/logdb/build -G Ninja -DCMAKE_BUILD_TYPE=Release
+          cmake --build .native/logdb/build
+      - name: RabbitMQ integration with a disposable local broker
+        env:
+          RABBIT_HOST: localhost
+          RABBIT_PORT: "5672"
+          RABBIT_USER: guest
+          RABBIT_PASS: guest
+        run: >
+          dotnet test tests/HobiaryLogPipe.Adapter.Tests/HobiaryLogPipe.Adapter.Tests.csproj
+          -c Release -p:HobiaryLogDbBuildDir=${{ github.workspace }}/.native/logdb/build/
+          --filter "FullyQualifiedName~HobiaryLogPipe.Adapter.Tests.Integration"
