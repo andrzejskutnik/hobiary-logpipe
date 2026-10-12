@@ -69,6 +69,10 @@ The native library is copied automatically from `../hobiary-logdb/build`.
 For a different build directory, pass
 `-p:HobiaryLogDbBuildDir=<absolute-directory-with-trailing-separator>` to
 `dotnet build`/`dotnet run`. A fresh clone must build this dependency first.
+When running the test suite with a custom directory, set the
+`HobiaryLogDbBuildDir` environment variable as well: CLI integration tests
+launch child builds that inherit environment variables, not MSBuild command
+line properties.
 
 Licensed under [Apache-2.0](LICENSE).
 Related projects: [HobiaryLogDB](https://github.com/andrzejskutnik/hobiary-logdb),
