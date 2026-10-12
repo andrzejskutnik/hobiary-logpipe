@@ -53,6 +53,7 @@ var host = Host.CreateDefaultBuilder(args)
 Console.WriteLine($"BrokerlessDemo starting for plugin '{pluginId}'. Output: '{Path.Combine(baseLogDirectory, pluginId)}'.");
 Console.WriteLine("Arguments: --plugin-id <id> --log-dir <path> --hold-seconds <n>");
 
+var demoStartedAtUs = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() * 1000L;
 await host.RunAsync();
 
 var logDirectory = Path.Combine(baseLogDirectory, pluginId);
@@ -66,17 +67,25 @@ if (!HobiaryLogClient.TryCreate(logDirectory, out var client, out var error) || 
 using (client)
 {
     var nowUs = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() * 1000L;
-    var timeWindowUs = (long)TimeSpan.FromMinutes(10).TotalMilliseconds * 1000L;
-    var records = client.QueryRange(nowUs - timeWindowUs, nowUs + timeWindowUs, limit: 20);
+    var records = client.QueryRange(demoStartedAtUs, nowUs + 1_000_000L, limit: 20);
     var views = records.Select(ToDemoLogView).ToList();
     var demoViews = views
         .Where(view => string.Equals(view.Service, pluginId, StringComparison.Ordinal)
             || string.Equals(view.Source, nameof(BrokerlessDemoWorker), StringComparison.Ordinal))
         .ToList();
     var recordsToDisplay = demoViews;
-    if (demoViews.Count < 4
-        || !demoViews.Any(view => view.Message == "Simulated business error stored without broker"))
-        throw new InvalidOperationException("Demo readback did not contain the expected synthetic records.");
+    var expectedRecords = new (string Level, string Message)[]
+    {
+        ("Info", $"Brokerless demo started for {pluginId}"),
+        ("Warn", "This warning is written through Microsoft.Extensions.Logging provider."),
+        ("Info", "Direct write through ILogPipeWriter"),
+        ("Error", "Simulated business error stored without broker"),
+    };
+    foreach (var expected in expectedRecords)
+    {
+        if (!demoViews.Any(view => view.Level == expected.Level && view.Message == expected.Message))
+            throw new InvalidOperationException($"Current demo readback is missing [{expected.Level}] {expected.Message}");
+    }
 
     Console.WriteLine();
     Console.WriteLine($"Read back {records.Count} record(s) from '{logDirectory}'. Displaying {recordsToDisplay.Count} demo-focused record(s):");
